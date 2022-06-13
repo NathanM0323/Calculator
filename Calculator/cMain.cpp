@@ -1,5 +1,29 @@
 #include "cMain.h"
 
+wxBEGIN_EVENT_TABLE(cMain, wxFrame)
+	EVT_BUTTON(0, OnButtonZeroClicked)
+	EVT_BUTTON(1, OnButtonOneClicked)
+	EVT_BUTTON(2, OnButtonTwoClicked)
+	EVT_BUTTON(3, OnButtonThreeClicked)
+	EVT_BUTTON(4, OnButtonFourClicked)
+	EVT_BUTTON(5, OnButtonFiveClicked)
+	EVT_BUTTON(6, OnButtonSixClicked)
+	EVT_BUTTON(7, OnButtonSevenClicked)
+	EVT_BUTTON(8, OnButtonEightClicked)
+	EVT_BUTTON(9, OnButtonNineClicked)
+	EVT_BUTTON(10, OnButtonCClicked)
+	EVT_BUTTON(20, OnButtonModClicked)
+	EVT_BUTTON(30, OnButtonBinaryClicked)
+	EVT_BUTTON(40, OnButtonHexClicked)
+	EVT_BUTTON(50, OnButtonDecimalClicked)
+	EVT_BUTTON(60, OnButtonNegativeClicked)
+	EVT_BUTTON(70, OnButtonPlusClicked)
+	EVT_BUTTON(80, OnButtonMinusClicked)
+	EVT_BUTTON(90, OnButtonMultiplyClicked)
+	EVT_BUTTON(100, OnButtonDivideClicked)
+	EVT_BUTTON(110, OnButtonEqualsClicked)
+wxEND_EVENT_TABLE()
+
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Nathan Minnick - Calculator", wxPoint(30, 30), wxSize(496, 560))
 {
 	// Creating the text box and buttons for the calculator
@@ -78,7 +102,188 @@ cMain::~cMain()
 
 }
 
-void cMain::OnButtonClicked(wxCommandEvent& evt)
+void cMain::OnButtonZeroClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnZero->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnZero->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonOneClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnOne->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnOne->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonTwoClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnTwo->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnTwo->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonThreeClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnThree->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnThree->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonFourClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnFour->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnFour->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonFiveClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnFive->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnFive->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonSixClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnSix->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnSix->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonSevenClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnSeven->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnSeven->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonEightClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnEight->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnEight->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonNineClicked(wxCommandEvent& evt)
+{
+	if (resultText->GetValue() == "0")
+	{
+		resultText->SetValue(btnNine->GetLabel());
+	}
+	else
+	{
+		resultText->AppendText(btnNine->GetLabel());
+	}
+	evt.Skip();
+}
+
+void cMain::OnButtonCClicked(wxCommandEvent& evt)
+{
+	resultText->SetValue("0");
+	evt.Skip();
+}
+
+void cMain::OnButtonModClicked(wxCommandEvent& evt)
+{
+	evt.Skip();
+}
+
+void cMain::OnButtonBinaryClicked(wxCommandEvent& evt)
+{
+	evt.Skip();
+}
+
+void cMain::OnButtonHexClicked(wxCommandEvent& evt)
+{
+	evt.Skip();
+}
+
+void cMain::OnButtonDecimalClicked(wxCommandEvent& evt)
+{
+	evt.Skip();
+}
+
+void cMain::OnButtonNegativeClicked(wxCommandEvent& evt)
+{
+	evt.Skip();
+}
+
+void cMain::OnButtonPlusClicked(wxCommandEvent& evt)
+{
+	evt.Skip();
+}
+
+void cMain::OnButtonMinusClicked(wxCommandEvent& evt)
+{
+	evt.Skip();
+}
+
+void cMain::OnButtonMultiplyClicked(wxCommandEvent& evt)
+{
+	evt.Skip();
+}
+
+void cMain::OnButtonDivideClicked(wxCommandEvent& evt)
+{
+	evt.Skip();
+}
+
+void cMain::OnButtonEqualsClicked(wxCommandEvent& evt)
 {
 	evt.Skip();
 }
