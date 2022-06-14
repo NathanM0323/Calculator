@@ -48,7 +48,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Nathan Minnick - Calculator", wxPoi
 	btnDecimal = new wxButton(this, 50, ".", wxPoint(320, 200), wxSize(80, 80));
 	btnDecimal->SetFont(fontButton);
 	
-	btnNegative = new wxButton(this, 60, "(-)", wxPoint(400, 200), wxSize(80, 80));
+	btnNegative = new wxButton(this, 60, "+/-", wxPoint(400, 200), wxSize(80, 80));
 	btnNegative->SetFont(fontButton);
 
 	btnOne = new wxButton(this, 1, "1", wxPoint(0, 280), wxSize(80,80));
@@ -229,6 +229,7 @@ void cMain::OnButtonNineClicked(wxCommandEvent& evt)
 	{
 		resultText->AppendText(btnNine->GetLabel());
 	}
+
 	evt.Skip();
 }
 
@@ -240,50 +241,175 @@ void cMain::OnButtonCClicked(wxCommandEvent& evt)
 
 void cMain::OnButtonModClicked(wxCommandEvent& evt)
 {
+	fast = resultText->GetValue();
+	Operand1 = wxAtoi(fast);
+	Operators = 5;
+	resultText->SetValue("0");
 	evt.Skip();
 }
 
 void cMain::OnButtonBinaryClicked(wxCommandEvent& evt)
 {
+	int i = 0;
+
+	while (doubleAnswer > 0)
+	{
+		binaryNum[i] = int(doubleAnswer) % 2;
+		doubleAnswer /= 2;
+		i++;
+	}
+
+	for (int j = i - 1; j >= 0; j--)
+	{
+		result = wxString::Format(wxT("%g"), binaryNum[i]);
+		resultText->AppendText(result);
+	}
 	evt.Skip();
 }
 
 void cMain::OnButtonHexClicked(wxCommandEvent& evt)
 {
+	while (doubleAnswer != 0)
+	{
+		remainder = int(doubleAnswer) % 16;
+		char ch;
+		if (remainder >= 10)
+		{
+			ch = remainder + 55;
+		}
+		else
+		{
+			ch = remainder + 48;
+		}
+
+		results += ch;
+		doubleAnswer /= 16;
+		product *= 10;
+	}
+
+	int nLen = results.Length();
+
+	for (int nIdx = 0; nIdx < nLen; nIdx++)
+	{
+		result.Prepend(results.GetChar(nIdx));
+	}
+
+	resultText->SetValue(result);
+
 	evt.Skip();
 }
 
 void cMain::OnButtonDecimalClicked(wxCommandEvent& evt)
 {
+	fast = resultText->GetValue();
+	doubleOperand1 = wxAtof(fast);
+	Operators = 6;
+	resultText->SetValue("0");
 	evt.Skip();
 }
 
 void cMain::OnButtonNegativeClicked(wxCommandEvent& evt)
 {
+	if (doubleAnswer != 0)
+	{
+		doubleAnswer *= -1;
+		result = wxString::Format(wxT("%.2f"), doubleAnswer);
+		resultText->SetValue(result);
+	}
+	else
+	{
+		negative = resultText->GetValue();
+		value = wxAtoi(negative);
+		answer = float(value) * float(-1);
+		result = wxString::Format(wxT("%g"), answer);
+		resultText->SetValue(result);
+	}
+
 	evt.Skip();
 }
 
 void cMain::OnButtonPlusClicked(wxCommandEvent& evt)
 {
+	fast = resultText->GetValue();
+	Operand1 = wxAtoi(fast);
+	Operators = 1;
+	resultText->SetValue("0");
 	evt.Skip();
 }
 
 void cMain::OnButtonMinusClicked(wxCommandEvent& evt)
 {
+	fast = resultText->GetValue();
+	Operand1 = wxAtoi(fast);
+	Operators = 2;
+	resultText->SetValue("0");
 	evt.Skip();
 }
 
 void cMain::OnButtonMultiplyClicked(wxCommandEvent& evt)
 {
+	fast = resultText->GetValue();
+	Operand1 = wxAtoi(fast);
+	Operators = 3;
+	resultText->SetValue("0");
 	evt.Skip();
 }
 
 void cMain::OnButtonDivideClicked(wxCommandEvent& evt)
 {
+	fast = resultText->GetValue();
+	Operand1 = wxAtoi(fast);
+	Operators = 4;
+	resultText->SetValue("0");
 	evt.Skip();
 }
 
 void cMain::OnButtonEqualsClicked(wxCommandEvent& evt)
 {
+	last = resultText->GetValue();
+
+	if (doubleOperand1 != NULL)
+	{
+		doubleOperand2 = wxAtof(last);
+	}
+	else
+	{
+		Operand2 = wxAtoi(last);
+	}
+	
+	switch (Operators)
+	{
+	case 1:
+		answer = float(Operand1) + float(Operand2);
+		result = wxString::Format(wxT("%g"), answer);
+		resultText->SetValue(result);
+		break;
+	case 2:
+		answer = float(Operand1) - float(Operand2);
+		result = wxString::Format(wxT("%g"), answer);
+		resultText->SetValue(result);
+		break;
+	case 3:
+		answer = float(Operand1) * float(Operand2);
+		result = wxString::Format(wxT("%g"), answer);
+		resultText->SetValue(result);
+		break;
+	case 4:
+		answer = float(Operand1) / float(Operand2);
+		result = wxString::Format(wxT("%g"), answer);
+		resultText->SetValue(result);
+		break;
+	case 5:
+		answer = Operand1 % Operand2;
+		result = wxString::Format(wxT("%g"), answer);
+		resultText->SetValue(result);
+		break;
+	case 6:
+		doubleAnswer = doubleOperand1 + (doubleOperand2 * .01);
+		result = wxString::Format(wxT("%.2f"), doubleAnswer);
+		resultText->SetValue(result);
+		break;
+	}
+	
 	evt.Skip();
 }
