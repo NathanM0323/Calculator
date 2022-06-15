@@ -1,28 +1,5 @@
 #include "cMain.h"
-
-wxBEGIN_EVENT_TABLE(cMain, wxFrame)
-	EVT_BUTTON(0, OnButtonZeroClicked)
-	EVT_BUTTON(1, OnButtonOneClicked)
-	EVT_BUTTON(2, OnButtonTwoClicked)
-	EVT_BUTTON(3, OnButtonThreeClicked)
-	EVT_BUTTON(4, OnButtonFourClicked)
-	EVT_BUTTON(5, OnButtonFiveClicked)
-	EVT_BUTTON(6, OnButtonSixClicked)
-	EVT_BUTTON(7, OnButtonSevenClicked)
-	EVT_BUTTON(8, OnButtonEightClicked)
-	EVT_BUTTON(9, OnButtonNineClicked)
-	EVT_BUTTON(10, OnButtonCClicked)
-	EVT_BUTTON(20, OnButtonModClicked)
-	EVT_BUTTON(30, OnButtonBinaryClicked)
-	EVT_BUTTON(40, OnButtonHexClicked)
-	EVT_BUTTON(50, OnButtonDecimalClicked)
-	EVT_BUTTON(60, OnButtonNegativeClicked)
-	EVT_BUTTON(70, OnButtonPlusClicked)
-	EVT_BUTTON(80, OnButtonMinusClicked)
-	EVT_BUTTON(90, OnButtonMultiplyClicked)
-	EVT_BUTTON(100, OnButtonDivideClicked)
-	EVT_BUTTON(110, OnButtonEqualsClicked)
-wxEND_EVENT_TABLE()
+#include "ButtonFactory.h"
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Nathan Minnick - Calculator", wxPoint(30, 30), wxSize(496, 560))
 {
@@ -33,68 +10,106 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Nathan Minnick - Calculator", wxPoi
 	resultText = new wxTextCtrl(this, wxID_ANY, "0", wxPoint(0, 0), wxSize(480, 200));
 	resultText->SetFont(fontResult);
 
-	btnC = new wxButton(this, 10, "C", wxPoint(0, 200), wxSize(80, 80));
-	btnC->SetFont(fontButton);
-
-	btnMod = new wxButton(this, 20, "Mod", wxPoint(80, 200), wxSize(80, 80));
-	btnMod->SetFont(fontButton);
-
-	btnBinary = new wxButton(this, 30, "Binary", wxPoint(160, 200), wxSize(80, 80));
-	btnBinary->SetFont(fontButton);
-
-	btnHex = new wxButton(this, 40, "Hex", wxPoint(240, 200), wxSize(80, 80));
-	btnHex->SetFont(fontButton);
-
-	btnDecimal = new wxButton(this, 50, ".", wxPoint(320, 200), wxSize(80, 80));
-	btnDecimal->SetFont(fontButton);
-	
-	btnNegative = new wxButton(this, 60, "+/-", wxPoint(400, 200), wxSize(80, 80));
-	btnNegative->SetFont(fontButton);
-
-	btnOne = new wxButton(this, 1, "1", wxPoint(0, 280), wxSize(80,80));
-	btnOne->SetFont(fontButton);
-
-	btnTwo = new wxButton(this, 2, "2", wxPoint(80, 280), wxSize(80, 80));
-	btnTwo->SetFont(fontButton);
-
-	btnThree = new wxButton(this, 3, "3", wxPoint(160, 280), wxSize(80, 80));
-	btnThree->SetFont(fontButton);
-	
-	btnFour = new wxButton(this, 4, "4", wxPoint(240, 280), wxSize(80, 80));
-	btnFour->SetFont(fontButton);
-	
-	btnPlus = new wxButton(this, 70, "+", wxPoint(320, 280), wxSize(80, 80));
-	btnPlus->SetFont(fontButton);
-	
-	btnMinus = new wxButton(this, 80, "-", wxPoint(400, 280), wxSize(80, 80));
-	btnMinus->SetFont(fontButton);
-
-	btnFive = new wxButton(this, 5, "5", wxPoint(0, 360), wxSize(80, 80));
-	btnFive->SetFont(fontButton);
-	
-	btnSix = new wxButton(this, 6, "6", wxPoint(80, 360), wxSize(80, 80));
-	btnSix->SetFont(fontButton);
-	
-	btnSeven = new wxButton(this, 7, "7", wxPoint(160, 360), wxSize(80, 80));
-	btnSeven->SetFont(fontButton);
-
-	btnEight = new wxButton(this, 8, "8", wxPoint(240, 360), wxSize(80, 80));
-	btnEight->SetFont(fontButton);
-	
-	btnMultiply = new wxButton(this, 90, "*", wxPoint(320, 360), wxSize(80, 80));
-	btnMultiply->SetFont(fontButton);
-	
-	btnDivide = new wxButton(this, 100, "/", wxPoint(400, 360), wxSize(80, 80));
-	btnDivide->SetFont(fontButton);
-
-	btnNine = new wxButton(this, 9, "9", wxPoint(0, 440), wxSize(80, 80));
-	btnNine->SetFont(fontButton);
-	
-	btnZero = new wxButton(this, 0, "0", wxPoint(80, 440), wxSize(80, 80));
-	btnZero->SetFont(fontButton);
-	
-	btnEquals = new wxButton(this, 110, "=", wxPoint(160, 440), wxSize(320, 80));
-	btnEquals->SetFont(fontButton);
+	for (int i = 1; i < 21; i++)
+	{
+		switch (i)
+		{
+		case 1:
+			buttons[i] = factory.CreateButtons(this, 10, "C", wxPoint(0, 200), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonCClicked, this);
+			break;
+		case 2:
+			buttons[i] = factory.CreateButtons(this, 20, "Mod", wxPoint(80, 200), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonModClicked, this);
+			break;
+		case 3:
+			buttons[i] = factory.CreateButtons(this, 30, "Binary", wxPoint(160, 200), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonBinaryClicked, this);
+			break;
+		case 4:
+			buttons[i] = factory.CreateButtons(this, 40, "Hex", wxPoint(240, 200), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonHexClicked, this);
+			break;
+		case 5:
+			buttons[i] = factory.CreateButtons(this, 50, ".", wxPoint(320, 200), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonDecimalClicked, this);
+			break;
+		case 6:
+			buttons[i] = factory.CreateButtons(this, 60, "+/-", wxPoint(400, 200), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonNegativeClicked, this);
+			break;
+		case 7:
+			buttons[i] = factory.CreateButtons(this, 1, "1", wxPoint(0, 280), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonOneClicked, this);
+			btnOne = buttons[i];
+			break;
+		case 8:
+			buttons[i] = factory.CreateButtons(this, 2, "2", wxPoint(80, 280), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonTwoClicked, this);
+			btnTwo = buttons[i];
+			break;
+		case 9:
+			buttons[i] = factory.CreateButtons(this, 3, "3", wxPoint(160, 280), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonThreeClicked, this);
+			btnThree = buttons[i];
+			break;
+		case 10:
+			buttons[i] = factory.CreateButtons(this, 4, "4", wxPoint(240, 280), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonFourClicked, this);
+			btnFour = buttons[i];
+			break;
+		case 11:
+			buttons[i] = factory.CreateButtons(this, 70, "+", wxPoint(320, 280), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonPlusClicked, this);
+			break;
+		case 12:
+			buttons[i] = factory.CreateButtons(this, 80, "-", wxPoint(400, 280), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonMinusClicked, this);
+			break;
+		case 13:
+			buttons[i] = factory.CreateButtons(this, 5, "5", wxPoint(0, 360), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonFiveClicked, this);
+			btnFive = buttons[i];
+			break;
+		case 14:
+			buttons[i] = factory.CreateButtons(this, 6, "6", wxPoint(80, 360), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonSixClicked, this);
+			btnSix = buttons[i];
+			break;
+		case 15:
+			buttons[i] = factory.CreateButtons(this, 7, "7", wxPoint(160, 360), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonSevenClicked, this);
+			btnSeven = buttons[i];
+			break;
+		case 16:
+			buttons[i] = factory.CreateButtons(this, 8, "8", wxPoint(240, 360), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonEightClicked, this);
+			btnEight = buttons[i];
+			break;
+		case 17:
+			buttons[i] = factory.CreateButtons(this, 90, "*", wxPoint(320, 360), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonMultiplyClicked, this);
+			break;
+		case 18:
+			buttons[i] = factory.CreateButtons(this, 100, "/", wxPoint(400, 360), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonDivideClicked, this);
+			break;
+		case 19:
+			buttons[i] = factory.CreateButtons(this, 9, "9", wxPoint(0, 440), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonNineClicked, this);
+			btnNine = buttons[i];
+			break;
+		case 20:
+			buttons[i] = factory.CreateButtons(this, 0, "0", wxPoint(80, 440), wxSize(80, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonZeroClicked, this);
+			btnZero = buttons[i];
+			break;
+		case 21:
+			buttons[i] = factory.CreateButtons(this, 110, "=", wxPoint(160, 440), wxSize(320, 80), fontButton);
+			buttons[i]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonEqualsClicked, this);
+			break;
+		}
+	}
 }
 
 cMain::~cMain()

@@ -2,35 +2,30 @@
 
 #include "wx/wx.h"
 
+#include "ButtonFactory.h"
+
 class cMain : public wxFrame
 {
 public:
 	cMain();
 	~cMain();
-
+	
 public:
 	// Initalizing the objects needed for the calculator
-	wxButton* btnZero = nullptr;
-	wxButton* btnOne = nullptr;
-	wxButton* btnTwo = nullptr;
-	wxButton* btnThree = nullptr;
-	wxButton* btnFour = nullptr;
-	wxButton* btnFive = nullptr;
-	wxButton* btnSix = nullptr;
-	wxButton* btnSeven = nullptr;
-	wxButton* btnEight = nullptr;
-	wxButton* btnNine = nullptr;
-	wxButton* btnPlus = nullptr;
-	wxButton* btnMinus = nullptr;
-	wxButton* btnMultiply = nullptr;
-	wxButton* btnDivide = nullptr;
-	wxButton* btnC = nullptr;
-	wxButton* btnMod = nullptr;
-	wxButton* btnBinary = nullptr;
-	wxButton* btnHex = nullptr;
-	wxButton* btnDecimal = nullptr;
-	wxButton* btnNegative = nullptr;
-	wxButton* btnEquals = nullptr;
+	ButtonFactory factory;
+
+	wxButton* btnZero;
+	wxButton* btnOne;
+	wxButton* btnTwo;
+	wxButton* btnThree;
+	wxButton* btnFour;
+	wxButton* btnFive;
+	wxButton* btnSix;
+	wxButton* btnSeven;
+	wxButton* btnEight;
+	wxButton* btnNine;
+
+	wxButton** buttons;
 
 	wxTextCtrl* resultText = nullptr;
 
@@ -54,8 +49,6 @@ public:
 	double doubleAnswer = 0;
 
 	float answer = 0.0;
-
-	wxDECLARE_EVENT_TABLE();
 
 	void OnButtonZeroClicked(wxCommandEvent& evt);
 	void OnButtonOneClicked(wxCommandEvent& evt);
