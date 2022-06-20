@@ -111,7 +111,10 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Nathan Minnick - Calculator", wxPoi
 	}
 }
 
-cMain::~cMain() {}
+cMain::~cMain() 
+{
+	delete[] buttons;
+}
 
 void cMain::OnButtonZeroClicked(wxCommandEvent& evt)
 {

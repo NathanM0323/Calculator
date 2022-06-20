@@ -1,4 +1,5 @@
 #pragma once
+#include "wx/wx.h"
 #include <string>
 
 class CalculatorProcessor
@@ -174,7 +175,6 @@ public:
 
 		return results;
 	}
-
 };
 
 CalculatorProcessor* CalculatorProcessor::_processor = nullptr;
