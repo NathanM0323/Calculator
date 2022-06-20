@@ -1,14 +1,7 @@
 #include "ButtonFactory.h"
+ButtonFactory::ButtonFactory() {}
 
-ButtonFactory::ButtonFactory()
-{
-
-}
-
-ButtonFactory::~ButtonFactory()
-{
-
-}
+ButtonFactory::~ButtonFactory() {}
 
 wxButton* ButtonFactory::CreateButtons(wxFrame* parent, int id, wxString faceValue, wxPoint point, wxSize size, wxFont font)
 {

@@ -1,5 +1,4 @@
 #include "cMain.h"
-#include "ButtonFactory.h"
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Nathan Minnick - Calculator", wxPoint(30, 30), wxSize(496, 560))
 {
@@ -112,10 +111,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Nathan Minnick - Calculator", wxPoi
 	}
 }
 
-cMain::~cMain()
-{
-
-}
+cMain::~cMain() {}
 
 void cMain::OnButtonZeroClicked(wxCommandEvent& evt)
 {
@@ -251,75 +247,45 @@ void cMain::OnButtonNineClicked(wxCommandEvent& evt)
 void cMain::OnButtonCClicked(wxCommandEvent& evt)
 {
 	resultText->SetValue("0");
+	first = "";
+	second = "";
+
 	evt.Skip();
 }
 
 void cMain::OnButtonModClicked(wxCommandEvent& evt)
 {
-	fast = resultText->GetValue();
-	Operand1 = wxAtoi(fast);
+	first = resultText->GetValue();
+	Processor->SetBaseNumber(wxAtoi(first));
 	Operators = 5;
 	resultText->SetValue("0");
 	evt.Skip();
 }
 
 void cMain::OnButtonBinaryClicked(wxCommandEvent& evt)
-{
-	int i = 0;
+{	
+	first = resultText->GetValue();
+	Processor->SetBaseNumber(wxAtoi(first));
+	resultText->SetValue(Processor->GetBinary());
 
-	while (doubleAnswer > 0)
-	{
-		binaryNum[i] = int(doubleAnswer) % 2;
-		doubleAnswer /= 2;
-		i++;
-	}
-
-	for (int j = i - 1; j >= 0; j--)
-	{
-		result = wxString::Format(wxT("%g"), binaryNum[i]);
-		resultText->AppendText(result);
-	}
 	evt.Skip();
 }
 
 void cMain::OnButtonHexClicked(wxCommandEvent& evt)
 {
-	while (doubleAnswer != 0)
-	{
-		remainder = int(doubleAnswer) % 16;
-		char ch;
-		if (remainder >= 10)
-		{
-			ch = remainder + 55;
-		}
-		else
-		{
-			ch = remainder + 48;
-		}
-
-		results += ch;
-		doubleAnswer /= 16;
-		product *= 10;
-	}
-
-	int nLen = results.Length();
-
-	for (int nIdx = 0; nIdx < nLen; nIdx++)
-	{
-		result.Prepend(results.GetChar(nIdx));
-	}
-
-	resultText->SetValue(result);
+	first = resultText->GetValue();
+	Processor->SetBaseNumber(wxAtoi(first));
+	resultText->SetValue(Processor->GetHexadecimal());
 
 	evt.Skip();
 }
 
 void cMain::OnButtonDecimalClicked(wxCommandEvent& evt)
 {
-	fast = resultText->GetValue();
-	doubleOperand1 = wxAtof(fast);
-	Operators = 6;
-	resultText->SetValue("0");
+	first = resultText->GetValue();
+	Processor->SetBaseNumber(wxAtoi(first));
+	resultText->SetValue(Processor->GetDecimal());
+
 	evt.Skip();
 }
 
@@ -345,8 +311,8 @@ void cMain::OnButtonNegativeClicked(wxCommandEvent& evt)
 
 void cMain::OnButtonPlusClicked(wxCommandEvent& evt)
 {
-	fast = resultText->GetValue();
-	Operand1 = wxAtoi(fast);
+	first = resultText->GetValue();
+	Processor->SetFirstValue(wxAtoi(first));
 	Operators = 1;
 	resultText->SetValue("0");
 	evt.Skip();
@@ -354,8 +320,8 @@ void cMain::OnButtonPlusClicked(wxCommandEvent& evt)
 
 void cMain::OnButtonMinusClicked(wxCommandEvent& evt)
 {
-	fast = resultText->GetValue();
-	Operand1 = wxAtoi(fast);
+	first = resultText->GetValue();
+	Processor->SetFirstValue(wxAtoi(first));
 	Operators = 2;
 	resultText->SetValue("0");
 	evt.Skip();
@@ -363,8 +329,8 @@ void cMain::OnButtonMinusClicked(wxCommandEvent& evt)
 
 void cMain::OnButtonMultiplyClicked(wxCommandEvent& evt)
 {
-	fast = resultText->GetValue();
-	Operand1 = wxAtoi(fast);
+	first = resultText->GetValue();
+	Processor->SetFirstValue(wxAtoi(first));
 	Operators = 3;
 	resultText->SetValue("0");
 	evt.Skip();
@@ -372,8 +338,8 @@ void cMain::OnButtonMultiplyClicked(wxCommandEvent& evt)
 
 void cMain::OnButtonDivideClicked(wxCommandEvent& evt)
 {
-	fast = resultText->GetValue();
-	Operand1 = wxAtoi(fast);
+	first = resultText->GetValue();
+	Processor->SetFirstValue(wxAtoi(first));
 	Operators = 4;
 	resultText->SetValue("0");
 	evt.Skip();
@@ -381,43 +347,34 @@ void cMain::OnButtonDivideClicked(wxCommandEvent& evt)
 
 void cMain::OnButtonEqualsClicked(wxCommandEvent& evt)
 {
-	last = resultText->GetValue();
+	second = resultText->GetValue();
+	Processor->SetSecondValue(wxAtoi(second));
 
 	if (doubleOperand1 != NULL)
 	{
-		doubleOperand2 = wxAtof(last);
+		doubleOperand2 = wxAtof(second);
 	}
 	else
 	{
-		Operand2 = wxAtoi(last);
+		Processor->SetSecondValue(wxAtoi(second));
 	}
 	
 	switch (Operators)
 	{
 	case 1:
-		answer = float(Operand1) + float(Operand2);
-		result = wxString::Format(wxT("%g"), answer);
-		resultText->SetValue(result);
+		resultText->SetValue(Processor->GetSum());
 		break;
 	case 2:
-		answer = float(Operand1) - float(Operand2);
-		result = wxString::Format(wxT("%g"), answer);
-		resultText->SetValue(result);
+		resultText->SetValue(Processor->GetDifference());
 		break;
 	case 3:
-		answer = float(Operand1) * float(Operand2);
-		result = wxString::Format(wxT("%g"), answer);
-		resultText->SetValue(result);
+		resultText->SetValue(Processor->GetProduct());
 		break;
 	case 4:
-		answer = float(Operand1) / float(Operand2);
-		result = wxString::Format(wxT("%g"), answer);
-		resultText->SetValue(result);
+		resultText->SetValue(Processor->GetQuotient());
 		break;
 	case 5:
-		answer = Operand1 % Operand2;
-		result = wxString::Format(wxT("%g"), answer);
-		resultText->SetValue(result);
+		resultText->SetValue(Processor->GetRemainder());
 		break;
 	case 6:
 		doubleAnswer = doubleOperand1 + (doubleOperand2 * .01);

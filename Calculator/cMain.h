@@ -1,8 +1,7 @@
 #pragma once
-
 #include "wx/wx.h"
-
 #include "ButtonFactory.h"
+#include "CalculatorProcessor.h"
 
 class cMain : public wxFrame
 {
@@ -12,36 +11,33 @@ public:
 	
 public:
 	// Initalizing the objects needed for the calculator
+	CalculatorProcessor* Processor = CalculatorProcessor::GetInstance();
+	
 	ButtonFactory factory;
 
-	wxButton* btnZero;
-	wxButton* btnOne;
-	wxButton* btnTwo;
-	wxButton* btnThree;
-	wxButton* btnFour;
-	wxButton* btnFive;
-	wxButton* btnSix;
-	wxButton* btnSeven;
-	wxButton* btnEight;
-	wxButton* btnNine;
+	wxButton* btnZero = nullptr;
+	wxButton* btnOne = nullptr;
+	wxButton* btnTwo = nullptr;
+	wxButton* btnThree = nullptr;
+	wxButton* btnFour = nullptr;
+	wxButton* btnFive = nullptr;
+	wxButton* btnSix = nullptr;
+	wxButton* btnSeven = nullptr;
+	wxButton* btnEight = nullptr;
+	wxButton* btnNine = nullptr;
 
 	wxButton** buttons;
 
 	wxTextCtrl* resultText = nullptr;
 
-	wxString fast = "";
-	wxString last = "";
+	wxString first = "";
+	wxString second = "";
 	wxString negative = "";
 	wxString result = "";
 	wxString results = "";
 
 	int value = 0;
-	int Operand1 = 0;
-	int Operand2 = 0;
 	int Operators = 0;
-	int binaryNum[32];
-	int remainder = 1;
-	int product = 1;
 
 	double intpart = 0;
 	double doubleOperand1;
