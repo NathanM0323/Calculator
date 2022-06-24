@@ -1,10 +1,11 @@
 #pragma once
 #include "wx/wx.h"
-class ButtonFactory
+class ButtonFactory : public wxButton
 {
 public:
 	ButtonFactory();
 	~ButtonFactory();
 public:
-	wxButton* CreateButtons(wxFrame* parent, int id, wxString faceValue, wxPoint point, wxSize size, wxFont font);
+	// Initalizes the button creation function
+	wxButton* CreateButtons(wxWindow* parent, wxWindowID id, wxString faceValue, wxPoint point, wxSize size);
 };

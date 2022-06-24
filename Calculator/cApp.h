@@ -9,7 +9,9 @@ public:
 	cApp();
 	~cApp();
 private:
+	// Initalizes the wxFrame
 	cMain* m_frame1 = nullptr;
 public:
+	// Initalizes the app intializng function
 	virtual bool OnInit();
 };
