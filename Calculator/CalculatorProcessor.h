@@ -8,10 +8,10 @@ private:
 	// Creates variables for calculations
 	CalculatorProcessor() {}
 	static CalculatorProcessor* _processor;
-	int baseNumber = 0;
-	int firstValue = 0;
-	int secondValue = 0;
-
+	float baseNumber = 0;
+	float firstValue = 0;
+	float secondValue = 0;
+	
 	// Initalizing the commands
 	std::vector<IBaseCommand*> commands;
 
@@ -20,10 +20,13 @@ public:
 	static CalculatorProcessor* GetInstance();
 
 	// Sets the first value for calculation
-	void SetFirstValue(int number);
+	void SetFirstValue(float number);
 
 	// Sets the second value for calculation
-	void SetSecondValue(int number);
+	void SetSecondValue(float number);
+
+	// Sets the base number for conversions
+	void SetBaseNumber(float number);
 
 	// Deletes the processor and operators
 	CalculatorProcessor(CalculatorProcessor& other) = delete;
@@ -43,4 +46,10 @@ public:
 
 	// Creates the remainder calculation
 	std::string GetRemainder();
+
+	// Creates the hexadecimal conversion
+	std::string GetHexadecimal();
+
+	// Creates the binary conversion
+	std::string GetBinary();
 };

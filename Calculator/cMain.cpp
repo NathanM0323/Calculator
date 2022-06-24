@@ -296,12 +296,8 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 			display->SetLabelText("0");
 
 			// Resets all variables
-			memset(hexadecimalNumber, 0, sizeof(hexadecimalNumber));
 			result = "";
 			value = 0;
-			mod = 0;
-			binary = 0;
-			product = 1;
 			op = 0;
 			i = 0;
 		break;
@@ -326,42 +322,23 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 			// Retrieves the value of the display number
 			value = (wxAtof(display->GetValue()));
 
-			// Iterates while the value is not 0
-			while (value != 0)
-			{
-				// Gets the remainder after the number is divided by 2
-				mod = int(value) % 2;
-				
-				// Sets the binary value to itself + the remainder * product 
-				binary += (mod * product);
-				
-				// Sets the value to itself / 2
-				value /= 2;
-				
-				// Sets the product to itself * 10
-				product *= 10;
-			}
+			// Sends the value to the processor to be converted
+			Processor->SetBaseNumber(value);
 
-			// Displays the value
-			display->SetValue(std::to_string(binary));
+			// Displays the result
+			display->SetValue(Processor->GetBinary());
 		break;
 		
 		// If the Hex button is clicked
 		case 400:
-			// Adds 0x to the result string
-			result += "0x";
-			
 			// Retrieves the value of the display number
 			value = (wxAtof(display->GetValue()));
-
-			// Converts the value to hexadecimal
-			sprintf(hexadecimalNumber, "%X", int(value));
-
-			// Adds the hexadeciaml number to the result string
-			result += hexadecimalNumber;
+	
+			// Sends the value to the processor to be converted
+			Processor->SetBaseNumber(value);
 
 			// Displays the result
-			display->SetValue(result);
+			display->SetValue(Processor->GetHexadecimal());
 		break;
 		
 		// If the Decimal (.) button is clicked

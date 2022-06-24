@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "CalculatorProcessor.h"
 #include "AddCommand.h"
 #include "SubtractCommand.h"
@@ -18,15 +19,21 @@ CalculatorProcessor* CalculatorProcessor::GetInstance()
 }
 
 // Sets the first value for calculations
-void CalculatorProcessor::SetFirstValue(int number)
+void CalculatorProcessor::SetFirstValue(float number)
 {
 	firstValue = number;
 }
 
 // Sets the second value for calculations
-void CalculatorProcessor::SetSecondValue(int number)
+void CalculatorProcessor::SetSecondValue(float number)
 {
 	secondValue = number;
+}
+
+// Sets the base number for conversions
+void CalculatorProcessor::SetBaseNumber(float number)
+{
+	baseNumber = number;
 }
 
 // Performs the sum operation
@@ -137,6 +144,60 @@ std::string CalculatorProcessor::GetRemainder()
 	// Performs the calculation and sets the result to the result string
 	remainder = int(firstNumber) % int(secondNumber);
 	results = wxString::Format(wxT("%g"), remainder);
+
+	// Returns the result
+	return results;
+}
+
+// Performs the hexadecimal conversion
+std::string CalculatorProcessor::GetHexadecimal()
+{
+	// Initalizing the variables needed
+	std::string results = "";
+	float baseValue = baseNumber;
+	char hexadecimalNumber[20];
+
+	// Adds 0x to the result string
+	results += "0x";
+
+	// Converts the value to hexadecimal
+	sprintf(hexadecimalNumber, "%X", int(baseValue));
+
+	// Adds the hexadeciaml number to the result string
+	results += hexadecimalNumber;
+
+	// Returns the result
+	return results;
+}
+
+// Performs the binary conversion
+std::string CalculatorProcessor::GetBinary()
+{
+	// Initalizing the variables needed
+	std::string results = "";
+	float baseValue = baseNumber;
+	int mod = 0;
+	int binary = 0;
+	int product = 1;
+
+	// Performs the conversion
+	while (baseValue != 0)
+	{
+		// Gets the remainder after the number is divided by 2
+		mod = int(baseValue) % 2;
+
+		// Sets the binary value to itself + the remainder * product 
+		binary += (mod * product);
+
+		// Sets the value to itself / 2
+		baseValue /= 2;
+
+		// Sets the product to itself * 10
+		product *= 10;
+	}
+
+	// Sets the results to the result string
+	results = std::to_string(binary);
 
 	// Returns the result
 	return results;

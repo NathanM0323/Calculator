@@ -1,5 +1,5 @@
 #include "ButtonFactory.h"
-ButtonFactory::ButtonFactory() {}
+ButtonFactory::ButtonFactory() : wxFrame(nullptr, wxID_ANY, "", wxDefaultPosition, wxSize(0,0)) {}
 
 ButtonFactory::~ButtonFactory() {}
 

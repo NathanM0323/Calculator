@@ -41,12 +41,8 @@ public:
 	
 	// Initalizing the variables needed to perform actions of the calculator
 	int buttonId = 0;
-	int mod = 0;
-	int binary = 0;
-	int product = 1;
 	int op = 0;
 	int i = 0;
-	char hexadecimalNumber[20];
 	float value = 0;
 	wxString result = "";
 
